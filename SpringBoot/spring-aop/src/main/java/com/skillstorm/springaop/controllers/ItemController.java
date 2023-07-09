@@ -23,7 +23,7 @@ import com.skillstorm.springaop.models.Item;
 
 @RestController
 @RequestMapping("/items")
-@CrossOrigin                    // specifies who is allowed to make requests, it defaults to allowing everyone
+@CrossOrigin                    // left blank to allow everyone access (not very good practice)
 public class ItemController {
     
 
@@ -32,20 +32,20 @@ public class ItemController {
 
 
     @GetMapping
-    public ResponseEntity<List<Item>> findAllItems() {
+    public ResponseEntity<List<Item>> findAllItems() {                                          //mapping retrieval of all items for our item table
         List<Item> items = itemService.findAllItems();
 
         return new ResponseEntity<List<Item>>(items, HttpStatus.OK);
     }
 
-    @GetMapping("/item/{id}")
+    @GetMapping("/item/{id}")                                                                   //mapping retrieval of item id's for our item table
     public ResponseEntity<Item> findItemById(@PathVariable int id) {
         Item item = itemService.findItemById(id);
         return new ResponseEntity<Item>(item, HttpStatus.OK);
     }
 
 
-    @GetMapping("/rarity/{rarity}")
+    @GetMapping("/rarity/{rarity}")                                                             //mapping retrieval of item rarities for our item table
     public ResponseEntity<List<Item>> findItemsByRating(@PathVariable int rarity) {
 
         List<Item> items = itemService.findItemsByRating(rarity);
@@ -58,40 +58,30 @@ public class ItemController {
 
     }
 
-    /*
-     * @Valid will make sure the incoming object meets all constraints defined on the model
-     * 
-     *      gives the error back here rather than when the record tries to be saved
-     * 
-     * 
-     *      aka JSR-303 validation
-     * 
-     */
 
-    @PostMapping("/item") 
+    @PostMapping("/item")                                                       //mapping creation for our item table
     public ResponseEntity<Item> createItem(@Valid @RequestBody Item item) {         
         
-        // insert the director that is provided with the item - handle this in the service
         Item newItem = itemService.saveItem(item);
         return new ResponseEntity<Item>(newItem, HttpStatus.CREATED);
     }
 
 
-    @PutMapping("/item") 
+    @PutMapping("/item")                                                        //mapping updates for our item table
     public ResponseEntity<Item> updateItem(@RequestBody Item item) {
         
         Item newItem = itemService.saveItem(item);
         return new ResponseEntity<Item>(newItem, HttpStatus.OK);
     }
 
-    @PutMapping("/item/updateName") 
+    @PutMapping("/item/updateName")                                                                             //mapping updates to our item names for our item table
     public ResponseEntity<Integer> updateItemName(@RequestBody Item item, @RequestParam String newName) {
         
         int updated = itemService.updateName(item, newName);
         return new ResponseEntity<Integer>(updated, HttpStatus.OK);
     }
 
-    @DeleteMapping("/item") 
+    @DeleteMapping("/item")                                                     //mapping deletion for our item table
     public ResponseEntity<Item> deleteItem(@RequestBody Item item) {
         
         itemService.deleteItem(item);

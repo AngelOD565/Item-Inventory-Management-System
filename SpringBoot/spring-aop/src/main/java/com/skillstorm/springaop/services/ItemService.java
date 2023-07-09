@@ -19,6 +19,9 @@ public class ItemService {
     @Autowired
     WarehouseService warehouseService;
 
+/*
+ * BELOW are our out-of-the-box Jpa methods
+ */
 
     public List<Item> findAllItems() {
         return itemRepository.findAll();       // calls the findAll() method in JpaRepository
@@ -30,8 +33,8 @@ public class ItemService {
         Optional<Item> item = itemRepository.findById(id);
         
         // if our database has a item with a matching id, return it
-        if(item.isPresent()) {             // ispresent checks if the optional returned the object
-            return item.get();             // get will retrieve the object
+        if(item.isPresent()) {             // ispresent checks if the optional returned the item
+            return item.get();             // get will retrieve the item
         }
 
         //otherwise return null
@@ -51,14 +54,12 @@ public class ItemService {
 
     public Item saveItem(Item item) {
 
-        /*
-         * save performs an isNew() check using your primary key
-         */
+        
 
 
         Warehouse warehouseWithId = warehouseService.saveWarehouse(item.getWarehouse());
         item.setWarehouse(warehouseWithId);
-        return itemRepository.save(item);                // comes OOTB with jpa respository
+        return itemRepository.save(item);                
     }
 
     public int updateName(Item item, String newName){

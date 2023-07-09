@@ -1,4 +1,8 @@
+/*
 
+	If you need to create/fix the tables in PostgreSQL, use the following code below to create them
+
+*/
 
 /* If the items or warehouses table already exists, drop it so it can be remade */
 

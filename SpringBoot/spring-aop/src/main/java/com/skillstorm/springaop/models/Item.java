@@ -25,19 +25,19 @@ public class Item {
 
     @Column
     @Max(5)
-    @Min(1)                                 // validation constraints
+    @Min(1)                                 // item rarities only go from 1 (Common) to 5 (Legendary)
     private int rarity;
 
-    @ManyToOne                              // specifies this is the MANY side of the relationship
-    @JoinColumn(name = "warehouse_id")       // specifies this is a foreign key to be joined on
+    @ManyToOne                              // this is the MANY side of the warehouse-item relationship
+    @JoinColumn(name = "warehouse_id")       // this is a foreign key to be joined on the warehouse id
     private Warehouse warehouse;
     
-    public Item() {
-
+    public Item() {                                             
+                                                                            
     }
 
     public Item(String name, int rarity, Warehouse warehouse) {
-        this.name = name;
+        this.name = name;                                                              //constructors and our getter/setter methods
         this.rarity = rarity;
         this.warehouse = warehouse;
     }
@@ -81,7 +81,7 @@ public class Item {
         this.warehouse = warehouse;
     }
 
-    @Override
+    @Override                                                                                   //hashCode() method
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -92,7 +92,7 @@ public class Item {
         return result;
     }
 
-    @Override
+    @Override                                                                                   //equals() method
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -119,7 +119,7 @@ public class Item {
     }
 
     @Override
-    public String toString() {
+    public String toString() {                                                                                      //toString() method
         return "Item [id=" + id + ", name=" + name + ", rarity=" + rarity + ", warehouse=" + warehouse + "]";
     }
 

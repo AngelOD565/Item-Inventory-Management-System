@@ -12,28 +12,28 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-@Entity                                     // tells jpa that this class relates to a db table
-@Table(name = "WAREHOUSES")                  // tells jpa WHICH db table - name isn't needed if your class name is the same as db table name
+@Entity                                     
+@Table(name = "WAREHOUSES")                  // Warehouse class maps to WAREHOUSES table in database
 public class Warehouse {
     
-    @Id                                     // specifies the primary key
-    @Column                                 // says this is a db column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)     // specify it uses Auto-Increment
+    @Id                                     
+    @Column                                 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)     // Serial ID column
     private int id;
 
     @Column(name = "warehouse_name")
     private String warehouseName;
 
     // specifies this is the ONE sideof the relatonship
-    @JsonBackReference      // prevent JSON infinite recursion - this set of movies will be ommitted from our JSON
-    @OneToMany(targetEntity = Item.class, mappedBy = "warehouse")   // mappedBy is the name of thhe JAVA VARIABLE in the other object
+    @JsonBackReference      
+    @OneToMany(targetEntity = Item.class, mappedBy = "warehouse")   // one-to-many side of warehouse-item relationship
     private Set<Item> items;
 
     public Warehouse() {
         
     }
 
-    public Warehouse(String warehouseName) {
+    public Warehouse(String warehouseName) {                                       //constructors and our getter/setter methods
         this.warehouseName = warehouseName;
     }
 
@@ -74,7 +74,7 @@ public class Warehouse {
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() {                                                                         //hashCode() method
         final int prime = 31;
         int result = 1;
         result = prime * result + id;
@@ -84,7 +84,7 @@ public class Warehouse {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) {                                                             //equals() method
         if (this == obj)
             return true;
         if (obj == null)
@@ -108,7 +108,7 @@ public class Warehouse {
     }
 
     @Override
-    public String toString() {
+    public String toString() {                                                                              //toString() method
         return "Warehouse [id=" + id + ", warehouseName=" + warehouseName + ", items=" + items + "]";
     }
 
