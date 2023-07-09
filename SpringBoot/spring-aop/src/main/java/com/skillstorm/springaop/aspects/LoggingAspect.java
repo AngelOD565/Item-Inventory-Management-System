@@ -68,7 +68,7 @@ public class LoggingAspect {
             try {
                 proceedingJoinPoint.proceed();
             } catch (Throwable e) {
-                log.error("Method could not beexecuted.", e);
+                log.error("Method could not be executed.", e);
             }
 
             log.debug("WAREHOUSE WAS CREATED");
