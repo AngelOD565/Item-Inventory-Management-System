@@ -36,52 +36,71 @@ public class Item {
                                                                             
     }
 
-    public Item(String name, int rarity, Warehouse warehouse) {
-        this.name = name;                                                              //constructors and our getter/setter methods
+    
+    public Item(String name, @Max(5) @Min(1) int rarity, Warehouse warehouse) {
+        this.name = name;
         this.rarity = rarity;
         this.warehouse = warehouse;
     }
 
-    public Item(int id, String name, int rarity, Warehouse warehouse) {
+
+    public Item(int id, String name, @Max(5) @Min(1) int rarity, Warehouse warehouse) {
         this.id = id;
         this.name = name;
         this.rarity = rarity;
         this.warehouse = warehouse;
     }
+
+
 
     public int getId() {
         return id;
     }
 
+
+
     public void setId(int id) {
         this.id = id;
     }
+
+
 
     public String getName() {
         return name;
     }
 
+
+
     public void setName(String name) {
         this.name = name;
     }
+
+
 
     public int getRarity() {
         return rarity;
     }
 
+
+
     public void setRarity(int rarity) {
         this.rarity = rarity;
     }
+
+
 
     public Warehouse getWarehouse() {
         return warehouse;
     }
 
+
+
     public void setWarehouse(Warehouse warehouse) {
         this.warehouse = warehouse;
     }
 
-    @Override                                                                                   //hashCode() method
+
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -92,7 +111,8 @@ public class Item {
         return result;
     }
 
-    @Override                                                                                   //equals() method
+
+    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
@@ -118,12 +138,14 @@ public class Item {
         return true;
     }
 
+
     @Override
-    public String toString() {                                                                                      //toString() method
+    public String toString() {
         return "Item [id=" + id + ", name=" + name + ", rarity=" + rarity + ", warehouse=" + warehouse + "]";
     }
 
-   
-    
+
+
+
 
 }

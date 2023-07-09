@@ -1,5 +1,6 @@
 package com.skillstorm.springaop.services;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +11,10 @@ import com.skillstorm.springaop.repositories.WarehouseRepository;
 public class WarehouseService {
     
     @Autowired
-    WarehouseRepository repository;
+    WarehouseRepository warehouseRepository;
 
     public Warehouse saveWarehouse(Warehouse warehouse) {
-        return repository.save(warehouse);
+        return warehouseRepository.save(warehouse);
     }
 
 }

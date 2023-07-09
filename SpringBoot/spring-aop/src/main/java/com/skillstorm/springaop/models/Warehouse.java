@@ -32,21 +32,28 @@ public class Warehouse {
     public Warehouse() {
         
     }
+    
 
-    public Warehouse(String warehouseName) {                                       //constructors and our getter/setter methods
+    public Warehouse(String warehouseName) {
         this.warehouseName = warehouseName;
     }
+
+
 
     public Warehouse(String warehouseName, Set<Item> items) {
         this.warehouseName = warehouseName;
         this.items = items;
     }
 
+    
+
+
     public Warehouse(int id, String warehouseName, Set<Item> items) {
         this.id = id;
         this.warehouseName = warehouseName;
         this.items = items;
     }
+
 
     public int getId() {
         return id;
@@ -64,7 +71,6 @@ public class Warehouse {
         this.warehouseName = warehouseName;
     }
 
- 
     public Set<Item> getItems() {
         return items;
     }
@@ -73,8 +79,10 @@ public class Warehouse {
         this.items = items;
     }
 
+
+
     @Override
-    public int hashCode() {                                                                         //hashCode() method
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
         result = prime * result + id;
@@ -83,8 +91,9 @@ public class Warehouse {
         return result;
     }
 
+
     @Override
-    public boolean equals(Object obj) {                                                             //equals() method
+    public boolean equals(Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
@@ -107,10 +116,11 @@ public class Warehouse {
         return true;
     }
 
+
     @Override
-    public String toString() {                                                                              //toString() method
-        return "Warehouse [id=" + id + ", warehouseName=" + warehouseName + ", items=" + items + "]";
+    public String toString() {
+        return "Warehouse [id=" + id + ", warehouseName=" + warehouseName + "]";
     }
 
- 
+  
 }
