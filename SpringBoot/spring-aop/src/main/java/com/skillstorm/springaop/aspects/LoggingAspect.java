@@ -62,7 +62,7 @@ public class LoggingAspect {
     public Warehouse logWarehouses(ProceedingJoinPoint proceedingJoinPoint, Warehouse warehouseToBeSaved) {
 
 
-        log.debug("DIRECTOR: {}", warehouseToBeSaved.toString());
+        log.debug("WAREHOUSE: {}", warehouseToBeSaved.toString());
 
         if(warehouseToBeSaved.getId() == 0) {
             try {
