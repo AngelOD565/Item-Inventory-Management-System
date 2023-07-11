@@ -99,7 +99,10 @@ document.getElementById('new-item-form').addEventListener('submit', (event) => {
         // use .get() to retrieve a field from form data and pass in the NAME attribute from the <input> tag
         name : inputData.get('new-item-name'),         
         rarity : inputData.get('new-item-rarity'),
-        warehouse : inputData.get('new-warehouse')
+        warehouse : {
+            id : inputData.get('new-warehouse-id'),
+            warehouseName : inputData.get('new-warehouse-name')}
+        
 
     }
 
@@ -164,7 +167,8 @@ function addItemToTable(newItem) {
     id.innerText = newItem.id;
     name.innerText = newItem.name;
     rarity.innerText = newItem.rarity;
-    warehouse.innerText = newItem.warehouse.warehouseName;
+    warehouse.innerText = newItem.warehouse.warehouseName + ' ' + newItem.warehouse.id;
+    
 
     editBtn.innerHTML = 
     `<button class="btn btn-primary" id="edit-button" onclick="activateEditForm(${newItem.id})">Edit</button>`;
@@ -276,7 +280,7 @@ document.getElementById('update-item-form').addEventListener('submit', (event) =
         rarity : inputData.get('update-item-rarity'),
         warehouse : {
             id : document.getElementById('update-warehouse-id').value,
-            warehouseName : inputData.get('update-warehouse-name'),
+            warehouseName : inputData.get('update-warehouse-name')
         }
     }
 
