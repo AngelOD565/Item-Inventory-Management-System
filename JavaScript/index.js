@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // add items to table
             items.forEach(newItem => {
-                additemToTable(newItem);
+                addItemToTable(newItem);
             });
 
         }
@@ -164,7 +164,7 @@ function addItemToTable(newItem) {
     id.innerText = newItem.id;
     name.innerText = newItem.name;
     rarity.innerText = newItem.rarity;
-    warehouse.innerText = newItem.warehouse.name;
+    warehouse.innerText = newItem.warehouse.warehouseName;
 
     editBtn.innerHTML = 
     `<button class="btn btn-primary" id="edit-button" onclick="activateEditForm(${newItem.id})">Edit</button>`;
@@ -228,7 +228,7 @@ function activateEditForm(itemId) {
             document.getElementById('update-item-name').value = i.name;
             document.getElementById('update-item-rarity').value = i.rarity;
             document.getElementById('update-warehouse-id').value = i.warehouse.id;
-            document.getElementById('update-warehouse-name').value = i.warehouse.name;
+            document.getElementById('update-warehouse-name').value = i.warehouse.warehouseName;
         }
     }
 
@@ -247,7 +247,7 @@ function activateDeleteForm(itemId) {
             document.getElementById('delete-item-name').value = i.name;
             document.getElementById('delete-item-rarity').value = i.rarity;
             document.getElementById('delete-warehouse-id').value = i.warehouse.id;
-            document.getElementById('delete-warehouse-name').value = i.warehouse.name;
+            document.getElementById('delete-warehouse-name').value = i.warehouse.warehouseName;
         }
     }
 
@@ -322,7 +322,7 @@ function updateItemInTable(item) {
     <td>${item.id}</td>
     <td>${item.name}</td>
     <td>${item.rarity}</td>
-    <td>${item.warehouse.name + ' ' + item.director.lastName}</td>
+    <td>${item.warehouse.warehouseName}</td>
     <td><button class="btn btn-primary" id=editButton" onclick="activateEditForm(${item.id})">Edit</button></td>
     <td><button class="btn btn-primary" id=deleteButton" onclick="activateDeleteForm(${item.id})">Delete</button></td>
     `;
