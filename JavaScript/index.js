@@ -4,7 +4,9 @@
 
 
 const URL = 'http://localhost:8282/items';
+const WURL= 'http://localhost:8282/warehouses';
 let allItems = [];
+let allWarehouses = [];
 
 /**
  * document - gives access to html elements
@@ -12,7 +14,7 @@ let allItems = [];
  * event listeners are how we respond to events in the html
  * 
  */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {                                                       //Listener for items
     /**
      * DOM - Document Object Model
      *  
@@ -68,11 +70,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // use open to set the request method and the url to send the request to (state changed to 1 - opened)
     xhr.open('GET', URL);
+    
 
     // this sends the request 
     xhr.send();
 
+ 
+
 });
+
+document.addEventListener('DOMContentLoaded', () => {                                              //Listener for warehouses
+
+    let xhr = new XMLHttpRequest();         
+
+    xhr.onreadystatechange = () => {
+
+        if(xhr.readyState === 4) {
+    
+            let warehouses = JSON.parse(xhr.responseText);
+
+            // add items to table
+            warehouses.forEach(newWarehouse => {
+                addWarehouseToTable(newWarehouse);
+            });
+
+        }
+
+    };
+
+    // use open to set the request method and the url to send the request to (state changed to 1 - opened)
+    xhr.open('GET', WURL);
+    
+    // this sends the request 
+    xhr.send();
+
+ 
+
+});
+
 
 
 ////////////////////////////////////////////
@@ -125,11 +160,50 @@ document.getElementById('new-item-form').addEventListener('submit', (event) => {
      *          use await to tell our program to wait for some asynchronous operation
      *              they can ONLY be used inside async functions
      */
-    doPostRequest(newItem);
+    doItemPostRequest(newItem);
 
 });
 
-async function doPostRequest(newItem) {
+document.getElementById('new-warehouse-form').addEventListener('submit', (event) => {
+
+    
+    event.preventDefault();         
+
+    
+    let inputData = new FormData(document.getElementById('new-warehouse-form'));
+
+    let newWarehouse = {
+        
+            id : inputData.get('new-warehouse-id'),
+            warehouseName : inputData.get('new-warehouse-name')
+        
+
+    };
+
+
+    /**
+     * 
+     * rather than using raw xhr objects, we can use fetch()
+     * 
+     * 
+     * fetch() is a built-in function that can send http requests
+     *      fetch() returns a Promise
+     * 
+     *      PROMISES
+     *          something that will return.. eventually
+     *          happen asynchronously from the rest of your program
+     * 
+     *      ASYNC and AWAIT
+     *          use async on function to tell you program that the function returns a promise
+     * 
+     *          use await to tell our program to wait for some asynchronous operation
+     *              they can ONLY be used inside async functions
+     */
+    doWarehousePostRequest(newWarehouse);
+
+});
+
+async function doItemPostRequest(newItem) {
 
     let returnedData = await fetch(URL + '/item', {
         method : 'POST',
@@ -145,10 +219,32 @@ async function doPostRequest(newItem) {
     console.log('ITEM JSON' + itemJson);
 
     // just need to add item to table
-    additemToTable(itemJson);
+    addItemToTable(itemJson);
 
     // reset the form
     document.getElementById('new-item-form').reset();
+}
+
+async function doWarehousePostRequest(newWarehouse) {
+
+    let returnedData = await fetch(WURL + '/warehouse', {
+        method : 'POST',
+        headers : {
+            'Content-Type' : 'application/json'         // make sure your server is expecting to receive JSON in the body
+        },
+        body : JSON.stringify(newWarehouse)      // turns a js object into JSON
+    });
+
+    // .json() to deserialize the JSON back into js object - this ALSO returns a promise
+    let warehouseJson = await returnedData.json();
+
+    console.log('WAREHOUSE JSON' + warehouseJson);
+
+    // just need to add item to table
+    addWarehouseToTable(warehouseJson);
+
+    // reset the form
+    document.getElementById('new-warehouse-form').reset();
 }
 
 function addItemToTable(newItem) {
@@ -171,10 +267,10 @@ function addItemToTable(newItem) {
     
 
     editBtn.innerHTML = 
-    `<button class="btn btn-primary" id="edit-button" onclick="activateEditForm(${newItem.id})">Edit</button>`;
+    `<button class="btn btn-primary" id="edit-button" onclick="activateItemEditForm(${newItem.id})">Edit</button>`;
 
     deleteBtn.innerHTML = 
-    `<button class="btn btn-primary" id="delete-button" onclick="activateDeleteForm(${newItem.id})">Delete</button>`;
+    `<button class="btn btn-primary" id="delete-button" onclick="activateItemDeleteForm(${newItem.id})">Delete</button>`;
 
     // adds the <td> tags as nested children to the tr> tag
     tr.appendChild(id);
@@ -196,35 +292,105 @@ function addItemToTable(newItem) {
 }
 
 
+
+function addWarehouseToTable(newWarehouse) {
+
+    // DOM Manipulation - where we manually change the DOM
+
+    // creting all necessary DOM elements
+    let tr = document.createElement('tr');      // will create a <tr> tag
+    let id = document.createElement('td');      // will create a <td> tag for item id
+    let warehouse = document.createElement('td');      // will create a <td> tag for director
+    let editBtn = document.createElement('td');      // will create a <td> tag for edit button
+    let deleteBtn = document.createElement('td');      // will create a <td> tag for delete button
+
+    id.innerText = newWarehouse.id;
+    warehouse.innerText = newWarehouse.warehouseName
+    
+
+    editBtn.innerHTML = 
+    `<button class="btn btn-primary" id="edit-button" onclick="activateWarehouseEditForm(${newWarehouse.id})">Edit</button>`;
+
+    deleteBtn.innerHTML = 
+    `<button class="btn btn-primary" id="delete-button" onclick="activateWarehouseDeleteForm(${newWarehouse.id})">Delete</button>`;
+
+    // adds the <td> tags as nested children to the tr> tag
+    tr.appendChild(id);
+    tr.appendChild(warehouse);
+    tr.appendChild(editBtn);
+    tr.appendChild(deleteBtn);
+
+    // setting the idattribute for the <tr>
+    tr.setAttribute('id', 'TR' + newWarehouse.id);
+
+    // adds the <tr> tag to the <tbody> tag
+    document.getElementById('warehouse-table-body').appendChild(tr);
+
+    // adding the new item to the list of all the items
+    allWarehouses.push(newWarehouse);
+
+}
+
+
+
+
 ///////////////////////////////////////////
 ///// CANCEL BUTTONS AND FORM TOGGLES /////
 ///////////////////////////////////////////
 
-document.getElementById('update-cancel-button').addEventListener('click', (event) => {
+document.getElementById('update-cancel-button').addEventListener('click', (event) => {      //Cancel Button for Edit Item 
     event.preventDefault();
-    resetAllForms();
+    resetAllItemForms();
 });
 
-document.getElementById('delete-cancel-button').addEventListener('click', (event) => {
+document.getElementById('delete-cancel-button').addEventListener('click', (event) => {      //Cancel Button for Delete Item 
     event.preventDefault();
-    resetAllForms();
+    resetAllItemForms();
     
 });
 
-function resetAllForms() {
+    document.getElementById('update-wcancel-button').addEventListener('click', (event) => {   //Cancel Button for Edit Warehouse 
+    event.preventDefault();
+    resetAllWarehouseForms();
+});
+
+document.getElementById('delete-wcancel-button').addEventListener('click', (event) => {      //Cancel Button for Delete Warehouse 
+    event.preventDefault();
+    resetAllWarehouseForms();
+    
+});
+
+function resetAllItemForms() {
 
     // clears data from all forms
     document.getElementById('new-item-form').reset();
     document.getElementById('update-item-form').reset();
     document.getElementById('delete-item-form').reset();
 
+
     // dispalys only the new-item-form
     document.getElementById('new-item-form').style.display = 'block';
     document.getElementById('update-item-form').style.display = 'none';
     document.getElementById('delete-item-form').style.display = 'none'; 
+
 }
 
-function activateEditForm(itemId) {
+function resetAllWarehouseForms() {
+
+    // clears data from all forms
+    document.getElementById('new-warehouse-form').reset();
+    document.getElementById('update-warehouse-form').reset();
+    document.getElementById('delete-warehouse-form').reset();
+
+
+    // dispalys only the new-item-form
+    document.getElementById('new-warehouse-form').style.display = 'block';
+    document.getElementById('update-warehouse-form').style.display = 'none';
+    document.getElementById('delete-warehouse-form').style.display = 'none'; 
+
+}
+
+function activateItemEditForm(itemId) {
     // find the item and its <tr> that needs to be edited
     for(let i of allItems) {
         if(i.id === itemId) {
@@ -243,7 +409,25 @@ function activateEditForm(itemId) {
 
 }
 
-function activateDeleteForm(itemId) {
+function activateWarehouseEditForm(warehouseId) {
+    // find the item and its <tr> that needs to be edited
+    for(let w of allWarehouses) {
+        if(w.id === warehouseId) {
+            document.getElementById('update-warehouse-id').value = w.id;
+            document.getElementById('update-warehouse-name').value = w.warehouseName;
+        }
+    }
+
+    // showing only the edit form
+    document.getElementById('new-warehouse-form').style.display = 'none';
+    document.getElementById('update-warehouse-form').style.display = 'block';   // block is the default for showing a tag
+    document.getElementById('delete-warehouse-form').style.display = 'none';
+
+}
+
+
+
+function activateItemDeleteForm(itemId) {
     // find the item and its <tr> that needs to be edited
     for(let i of allItems) {
         if(i.id === itemId) {
@@ -262,12 +446,28 @@ function activateDeleteForm(itemId) {
     
 }
 
+function activateWarehouseDeleteForm(warehouseId) {
+    // find the item and its <tr> that needs to be edited
+    for(let w of allWarehouses) {
+        if(w.id === warehouseId) {
+            document.getElementById('delete-warehouse-id').value = w.id;
+            document.getElementById('delete-warehouse-name').value = w.warehouseName;
+        }
+    }
+
+    // showing only the edit form
+    document.getElementById('new-warehouse-form').style.display = 'none';
+    document.getElementById('update-warehouse-form').style.display = 'none';
+    document.getElementById('delete-warehouse-form').style.display = 'block';   // block is the default for showing a tag
+    
+}
+
 
 /////////////////////////////////////////////////
 ///// UPDATE REQUEST AND CHANGING THE TABLE /////
 /////////////////////////////////////////////////
 
-document.getElementById('update-item-form').addEventListener('submit', (event) => {
+document.getElementById('update-item-form').addEventListener('submit', (event) => {         //Listener for Item edit
     event.preventDefault();		// prevent default form actions from occuring
 
     // retrieving data from the update form
@@ -327,8 +527,61 @@ function updateItemInTable(item) {
     <td>${item.name}</td>
     <td>${item.rarity}</td>
     <td>${item.warehouse.warehouseName}</td>
-    <td><button class="btn btn-primary" id=editButton" onclick="activateEditForm(${item.id})">Edit</button></td>
-    <td><button class="btn btn-primary" id=deleteButton" onclick="activateDeleteForm(${item.id})">Delete</button></td>
+    <td><button class="btn btn-primary" id=editButton" onclick="activateItemEditForm(${item.id})">Edit</button></td>
+    <td><button class="btn btn-primary" id=deleteButton" onclick="activateItemDeleteForm(${item.id})">Delete</button></td>
+    `;
+}
+
+
+document.getElementById('update-warehouse-form').addEventListener('submit', (event) => {            //Listener for warehouse edit
+    event.preventDefault();		
+
+    let inputData = new FormData(document.getElementById('update-warehouse-form'));
+
+    // MAKE SURE TO INCLUDE IDS WHEN DOING A PUT REQUEST
+    let warehouse = {
+        id : document.getElementById('update-warehouse-id').value,
+        warehouseName : inputData.get('update-warehouse-name')
+    }
+
+    fetch(WURL + '/warehouse', {
+        method : 'PUT',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body : JSON.stringify(warehouse)
+    })
+    .then((data) => {
+        // this will handle all 100, 200, and 300 status code responses
+        
+        // we still need to serialize the response into JSON
+        return data.json();
+    })
+    .then((warehouseJson) => {          // handling the promise returned by data.json (*** this is where we update the table ***)
+        
+        // adding the updated item to our table
+        updateWarehouseInTable(warehouseJson);
+
+        // reset the forms
+        document.getElementById('update-warehouse-form').reset();
+        document.getElementById('new-warehouse-form').style.display = 'block';
+        document.getElementById('update-warehouse-form').style.display = 'none';
+    })
+    .catch((error) => {
+        
+
+        console.error(error);   
+    })
+});
+
+
+
+function updateWarehouseInTable(warehouse) {
+    document.getElementById('TR' + warehouse.id).innerHTML = `
+    <td>${warehouse.id}</td>
+    <td>${warehouse.warehouseName}</td>
+    <td><button class="btn btn-primary" id=editButton" onclick="activateWarehouseEditForm(${warehouse.id})">Edit</button></td>
+    <td><button class="btn btn-primary" id=deleteButton" onclick="activateWarehouseDeleteForm(${warehouse.id})">Delete</button></td>
     `;
 }
 
@@ -337,7 +590,7 @@ function updateItemInTable(item) {
 ///// DELETE REQUEST AND REMOVING FROM TABLE /////
 //////////////////////////////////////////////////
 
-document.getElementById('delete-item-form').addEventListener('submit', (event) => {
+document.getElementById('delete-item-form').addEventListener('submit', (event) => {         //Listener for Delete item
     event.preventDefault();		// prevent default form actions from occuring
 
 
@@ -376,7 +629,7 @@ document.getElementById('delete-item-form').addEventListener('submit', (event) =
             removeItemFromTable(item);
 
             // resetting all forms
-            resetAllForms();
+            resetAllItemForms();
         }
     })
     .catch((error) => {
@@ -389,6 +642,55 @@ function removeItemFromTable(item) {
 
     // removing the <tr> from the table when a item gets deleted
     const element = document.getElementById('TR' + item.id);
+    element.remove();
+}
+
+document.getElementById('delete-warehouse-form').addEventListener('submit', (event) => {         //Listener for Delete warehouse
+    event.preventDefault();		// prevent default form actions from occuring
+
+
+    // get the data from the form since all the fields are disabled and FormData won't capture them
+
+    let warehouseId = document.getElementById('delete-warehouse-id').value;
+    let warehouseName = document.getElementById('delete-warehouse-name').value;
+
+    // creating the item object that needs to be deleted
+    let warehouse = {
+            id : warehouseId,
+            warehouseName : warehouseName
+        }
+    
+
+    // sending delete request
+    fetch(WURL + '/warehouse', {
+        method : 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body : JSON.stringify(warehouse)
+    })
+    .then((data) => {
+
+        // delete request returns no-content so there's no need to deserialize the response and wait for that promie
+        // just need to check that the response we got back is 204 - No Content and we can delete it on the front end
+        if(data.status === 204) {
+            // remove item from table
+            removeWarehouseFromTable(warehouse);
+
+            // resetting all forms
+            resetAllWarehouseForms();
+        }
+    })
+    .catch((error) => {
+        console.error(error);   
+    })
+
+});
+
+function removeWarehouseFromTable(warehouse) {
+
+    // removing the <tr> from the table when a item gets deleted
+    const element = document.getElementById('TR' + warehouse.id);
     element.remove();
 }
 

@@ -186,7 +186,7 @@
 
     <!--Warehouses Tab-->
       
-    <div id="Warehouses" class="tabcontent" style="display:block">
+    <div id="Warehouses" class="tabcontent" style="display:none">
         <div class="container-fluid">
 
             <h1 class="h1">Warehouses API</h1>
@@ -207,18 +207,18 @@
     
                         <div class="form-group">
                             <label>Warehouse ID</label>
-                            <input id="new-warehouse-id" name="new-warehouse-id" type="number" class="form-control" disabled/>
+                            <input id="new-warehouse-id" name="new-warehouse-id" type="number" class="form-control" />
                         </div>
     
                         <div class="form-group">
-                            <input id="save-button" name="save-button" type="submit" value="Save" class="btn btn-primary" />
+                            <input id="save-wbutton" name="save-button" type="submit" value="Save" class="btn btn-primary" />
                         </div>
     
                     </form>
     
                     <!-- UPDATE MOVIE FORM -->
                     <!-- style="display: none;" makes it so that the DOM does not render this tag-->
-                    <form id="update-item-form" action="#" style="display: none;">   <!-- action="#" prevents page redirections when form is submited -->
+                    <form id="update-warehouse-form" action="#" style="display: none;">   <!-- action="#" prevents page redirections when form is submited -->
 
                         <div class="form-group">
                             <label>Warehouse Name</label>
@@ -231,18 +231,18 @@
                         </div>
     
                         <div class="form-group">
-                            <button id="update-cancel-button" class="btn btn-secondary">Cancel</button>
+                            <button id="update-wcancel-button" class="btn btn-secondary">Cancel</button>
                         </div>
     
                         <div class="form-group">
-                            <input id="update-button" name="update-button" type="submit" value="Update" class="btn btn-primary" />
+                            <input id="update-wbutton" name="update-button" type="submit" value="Update" class="btn btn-primary" />
                         </div>
     
                     </form>
     
                     <!-- DELETE MOVIE FORM -->
                     <!-- style="display: none;" makes it so that the DOM does not render this tag-->
-                    <form id="delete-item-form" action="#" style="display: none;">   <!-- action="#" prevents page redirections when form is submited -->
+                    <form id="delete-warehouse-form" action="#" style="display: none;">   <!-- action="#" prevents page redirections when form is submited -->
     
                         <div class="form-group">
                             <label>Warehouse ID</label>
@@ -257,11 +257,11 @@
                         </div>
     
                         <div class="form-group">
-                            <button id="delete-cancel-button" class="btn btn-secondary">Cancel</button>
+                            <button id="delete-wcancel-button" class="btn btn-secondary">Cancel</button>
                         </div>
     
                         <div class="form-group">
-                            <input id="delete-button" name="delete-button" type="submit" value="Delete" class="btn btn-primary" />
+                            <input id="delete-wbutton" name="delete-button" type="submit" value="Delete" class="btn btn-primary" />
                         </div>
     
                     </form>
@@ -283,7 +283,7 @@
                                 <th>Delete</th>
                             </tr>
                         </thead>
-                        <tbody id="item-table-body">
+                        <tbody id="warehouse-table-body">
                             <!-- we wil add rows dynamically using js -->
                         </tbody>
                     </table>
