@@ -48,6 +48,12 @@ public class WarehouseController {
         Warehouse newWarehouse = warehouseService.saveWarehouse(warehouse);
         return new ResponseEntity<Warehouse>(newWarehouse, HttpStatus.CREATED);
     }
+    @PutMapping("/warehouse")                                                        //mapping updates for our item table
+    public ResponseEntity<Warehouse> updateWarehouse(@RequestBody Warehouse warehouse) {
+        
+        Warehouse newWarehouse = warehouseService.saveWarehouse(warehouse);
+        return new ResponseEntity<Warehouse>(newWarehouse, HttpStatus.OK);
+    }
 
 
     @PutMapping("/warehouse/updateName")                                                                             //mapping updates to our warehouse names for our warehouse table

@@ -1,5 +1,5 @@
 /**
- * here is the javascript for index.html for the items API
+ * here is the javascript for index.html for the items API wand warehouses API
  */
 
 
@@ -15,45 +15,12 @@ let allWarehouses = [];
  * 
  */
 document.addEventListener('DOMContentLoaded', () => {                                                       //Listener for items
-    /**
-     * DOM - Document Object Model
-     *  
-     *  DOMContentLoaded is an event that fires when the DOM is loaded
-     *      page loads and refreshes
-     * 
-     */
+  
+    let xhr = new XMLHttpRequest();         // creating a new XHR object 
 
-
-    /**
-     * AJAX - Asynchronous JavaScript and XML
-     * 
-     *  the primary object of AJAX, is XmlHttpRequest (XHR)
-     * 
-     */
-
-    let xhr = new XMLHttpRequest();         // creating a new XHR object (this puts it into state 0 - unsent)
-
-    /**
-     * onreadystatechange - is a callback that fires everytime the state of the xhr changes
-     * 
-     *      5 stages (ready states):
-     *          0 - unsent
-     *          1 - opened
-     *          2 - headers received
-     *          3 - loading
-     *          4 - done        ---> this is the main one we care about
-     */
     xhr.onreadystatechange = () => {
-
-        /**
-         * strict equality (===) and regular equality (==) in JS
-         *      strict equality checks values and data types
-         *      regualr equality only checks values
-         * 
-         *      ex: 4 === '4' is false but 4 == '4' is true
-         */
+         
         if(xhr.readyState === 4) {
-            // at readyState 4, we have our response from the server 
 
             // responseText contains the response from the server
             // JSON.parse() parses the JSON into js objects
@@ -68,7 +35,6 @@ document.addEventListener('DOMContentLoaded', () => {                           
 
     };
 
-    // use open to set the request method and the url to send the request to (state changed to 1 - opened)
     xhr.open('GET', URL);
     
 
@@ -89,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {                           
     
             let warehouses = JSON.parse(xhr.responseText);
 
-            // add items to table
+            // add warehouses to table
             warehouses.forEach(newWarehouse => {
                 addWarehouseToTable(newWarehouse);
             });
@@ -98,10 +64,8 @@ document.addEventListener('DOMContentLoaded', () => {                           
 
     };
 
-    // use open to set the request method and the url to send the request to (state changed to 1 - opened)
     xhr.open('GET', WURL);
     
-    // this sends the request 
     xhr.send();
 
  
@@ -119,15 +83,8 @@ document.getElementById('new-item-form').addEventListener('submit', (event) => {
     // event object gives info about the event that we are listening for
     event.preventDefault();         //preventDefault() is going to prevent the form from refreshing the page 
 
-    /**
-     * one option to grab form data is to call document.getElementById().value for each input field
-     * 
-     * a beter option is to us FORM DATA
-     * 
-     * FormData provides all the data from a form in an easy to work with obect
-     */
 
-    // FormData takes in the html tags for your form
+    // FormData takes in the html tags for our form
     let inputData = new FormData(document.getElementById('new-item-form'));
 
     let newItem = {
@@ -141,35 +98,14 @@ document.getElementById('new-item-form').addEventListener('submit', (event) => {
 
     }
 
-
-    /**
-     * 
-     * rather than using raw xhr objects, we can use fetch()
-     * 
-     * 
-     * fetch() is a built-in function that can send http requests
-     *      fetch() returns a Promise
-     * 
-     *      PROMISES
-     *          something that will return.. eventually
-     *          happen asynchronously from the rest of your program
-     * 
-     *      ASYNC and AWAIT
-     *          use async on function to tell you program that the function returns a promise
-     * 
-     *          use await to tell our program to wait for some asynchronous operation
-     *              they can ONLY be used inside async functions
-     */
     doItemPostRequest(newItem);
 
 });
 
 document.getElementById('new-warehouse-form').addEventListener('submit', (event) => {
 
-    
     event.preventDefault();         
 
-    
     let inputData = new FormData(document.getElementById('new-warehouse-form'));
 
     let newWarehouse = {
@@ -180,25 +116,6 @@ document.getElementById('new-warehouse-form').addEventListener('submit', (event)
 
     };
 
-
-    /**
-     * 
-     * rather than using raw xhr objects, we can use fetch()
-     * 
-     * 
-     * fetch() is a built-in function that can send http requests
-     *      fetch() returns a Promise
-     * 
-     *      PROMISES
-     *          something that will return.. eventually
-     *          happen asynchronously from the rest of your program
-     * 
-     *      ASYNC and AWAIT
-     *          use async on function to tell you program that the function returns a promise
-     * 
-     *          use await to tell our program to wait for some asynchronous operation
-     *              they can ONLY be used inside async functions
-     */
     doWarehousePostRequest(newWarehouse);
 
 });
@@ -208,7 +125,7 @@ async function doItemPostRequest(newItem) {
     let returnedData = await fetch(URL + '/item', {
         method : 'POST',
         headers : {
-            'Content-Type' : 'application/json'         // make sure your server is expecting to receive JSON in the body
+            'Content-Type' : 'application/json'         
         },
         body : JSON.stringify(newItem)      // turns a js object into JSON
     });
@@ -230,7 +147,7 @@ async function doWarehousePostRequest(newWarehouse) {
     let returnedData = await fetch(WURL + '/warehouse', {
         method : 'POST',
         headers : {
-            'Content-Type' : 'application/json'         // make sure your server is expecting to receive JSON in the body
+            'Content-Type' : 'application/json'         
         },
         body : JSON.stringify(newWarehouse)      // turns a js object into JSON
     });
@@ -240,7 +157,7 @@ async function doWarehousePostRequest(newWarehouse) {
 
     console.log('WAREHOUSE JSON' + warehouseJson);
 
-    // just need to add item to table
+    // just need to add warehouse to table
     addWarehouseToTable(warehouseJson);
 
     // reset the form
@@ -256,7 +173,7 @@ function addItemToTable(newItem) {
     let id = document.createElement('td');      // will create a <td> tag for item id
     let name = document.createElement('td');      // will create a <td> tag for item name
     let rarity = document.createElement('td');      // will create a <td> tag for item rarity
-    let warehouse = document.createElement('td');      // will create a <td> tag for director
+    let warehouse = document.createElement('td');      // will create a <td> tag for warehouse
     let editBtn = document.createElement('td');      // will create a <td> tag for edit button
     let deleteBtn = document.createElement('td');      // will create a <td> tag for delete button
 
@@ -295,12 +212,10 @@ function addItemToTable(newItem) {
 
 function addWarehouseToTable(newWarehouse) {
 
-    // DOM Manipulation - where we manually change the DOM
-
     // creting all necessary DOM elements
     let tr = document.createElement('tr');      // will create a <tr> tag
-    let id = document.createElement('td');      // will create a <td> tag for item id
-    let warehouse = document.createElement('td');      // will create a <td> tag for director
+    let id = document.createElement('td');      // will create a <td> tag for warehouse id
+    let warehouse = document.createElement('td');      // will create a <td> tag for warehouse
     let editBtn = document.createElement('td');      // will create a <td> tag for edit button
     let deleteBtn = document.createElement('td');      // will create a <td> tag for delete button
 
@@ -326,7 +241,7 @@ function addWarehouseToTable(newWarehouse) {
     // adds the <tr> tag to the <tbody> tag
     document.getElementById('warehouse-table-body').appendChild(tr);
 
-    // adding the new item to the list of all the items
+    // adding the new warehouse to the list of all the warehouses
     allWarehouses.push(newWarehouse);
 
 }
@@ -368,7 +283,7 @@ function resetAllItemForms() {
     document.getElementById('delete-item-form').reset();
 
 
-    // dispalys only the new-item-form
+    // displays only the new-item-form
     document.getElementById('new-item-form').style.display = 'block';
     document.getElementById('update-item-form').style.display = 'none';
     document.getElementById('delete-item-form').style.display = 'none'; 
@@ -383,7 +298,7 @@ function resetAllWarehouseForms() {
     document.getElementById('delete-warehouse-form').reset();
 
 
-    // dispalys only the new-item-form
+    // dispalys only the new-warehouse-form
     document.getElementById('new-warehouse-form').style.display = 'block';
     document.getElementById('update-warehouse-form').style.display = 'none';
     document.getElementById('delete-warehouse-form').style.display = 'none'; 
@@ -439,7 +354,7 @@ function activateItemDeleteForm(itemId) {
         }
     }
 
-    // showing only the edit form
+    // showing only the delete form
     document.getElementById('new-item-form').style.display = 'none';
     document.getElementById('update-item-form').style.display = 'none';
     document.getElementById('delete-item-form').style.display = 'block';   // block is the default for showing a tag
@@ -455,7 +370,7 @@ function activateWarehouseDeleteForm(warehouseId) {
         }
     }
 
-    // showing only the edit form
+    // showing only the delete form
     document.getElementById('new-warehouse-form').style.display = 'none';
     document.getElementById('update-warehouse-form').style.display = 'none';
     document.getElementById('delete-warehouse-form').style.display = 'block';   // block is the default for showing a tag
@@ -473,7 +388,6 @@ document.getElementById('update-item-form').addEventListener('submit', (event) =
     // retrieving data from the update form
     let inputData = new FormData(document.getElementById('update-item-form'));
 
-    // MAKE SURE TO INCLUDE IDS WHEN DOING A PUT REQUEST
     let item = {
         id : document.getElementById('update-item-id').value,    // FormData cannot access values from disabled fields
         name : inputData.get('update-item-name'),         
@@ -484,13 +398,6 @@ document.getElementById('update-item-form').addEventListener('submit', (event) =
         }
     }
 
-    /**
-     * alternative/preferred way to handle promises:
-     *      rather than using async/await, we can use .then() and pass in a callback function
-     * 
-     *      .then will run whenever the promise returns succesfully
-     *      .catch will run whenever the promise returns unsuccessfully
-     */
     fetch(URL + '/item', {
         method : 'PUT',
         headers: {
@@ -517,7 +424,7 @@ document.getElementById('update-item-form').addEventListener('submit', (event) =
     .catch((error) => {
         // this will handle all 400 and 500 status code responses
 
-        console.error(error);   // generally, you never want to use console.log() - especially in a production environment
+        console.error(error); 
     })
 });
 
@@ -559,7 +466,7 @@ document.getElementById('update-warehouse-form').addEventListener('submit', (eve
     })
     .then((warehouseJson) => {          // handling the promise returned by data.json (*** this is where we update the table ***)
         
-        // adding the updated item to our table
+        // adding the updated warehouse to our table
         updateWarehouseInTable(warehouseJson);
 
         // reset the forms
@@ -654,7 +561,7 @@ document.getElementById('delete-warehouse-form').addEventListener('submit', (eve
     let warehouseId = document.getElementById('delete-warehouse-id').value;
     let warehouseName = document.getElementById('delete-warehouse-name').value;
 
-    // creating the item object that needs to be deleted
+    // creating the warehouse object that needs to be deleted
     let warehouse = {
             id : warehouseId,
             warehouseName : warehouseName
@@ -671,10 +578,10 @@ document.getElementById('delete-warehouse-form').addEventListener('submit', (eve
     })
     .then((data) => {
 
-        // delete request returns no-content so there's no need to deserialize the response and wait for that promie
+        // delete request returns no-content so there's no need to deserialize the response and wait for that promise
         // just need to check that the response we got back is 204 - No Content and we can delete it on the front end
         if(data.status === 204) {
-            // remove item from table
+            // remove warehouse from table
             removeWarehouseFromTable(warehouse);
 
             // resetting all forms
@@ -689,7 +596,7 @@ document.getElementById('delete-warehouse-form').addEventListener('submit', (eve
 
 function removeWarehouseFromTable(warehouse) {
 
-    // removing the <tr> from the table when a item gets deleted
+    // removing the <tr> from the table when a warehouse gets deleted
     const element = document.getElementById('TR' + warehouse.id);
     element.remove();
 }
