@@ -187,7 +187,7 @@ function addItemToTable(newItem) {
     `<button class="btn btn-primary" id="edit-button" onclick="activateItemEditForm(${newItem.id})">Edit</button>`;
 
     deleteBtn.innerHTML = 
-    `<button class="btn btn-primary" id="delete-button" onclick="activateItemDeleteForm(${newItem.id})">Delete</button>`;
+    `<button class="btn btn-danger" id="delete-button" onclick="activateItemDeleteForm(${newItem.id})">Delete</button>`;
 
     // adds the <td> tags as nested children to the tr> tag
     tr.appendChild(id);
@@ -227,7 +227,7 @@ function addWarehouseToTable(newWarehouse) {
     `<button class="btn btn-primary" id="edit-button" onclick="activateWarehouseEditForm(${newWarehouse.id})">Edit</button>`;
 
     deleteBtn.innerHTML = 
-    `<button class="btn btn-primary" id="delete-button" onclick="activateWarehouseDeleteForm(${newWarehouse.id})">Delete</button>`;
+    `<button class="btn btn-danger" id="delete-button" onclick="activateWarehouseDeleteForm(${newWarehouse.id})">Delete</button>`;
 
     // adds the <td> tags as nested children to the tr> tag
     tr.appendChild(id);
@@ -435,7 +435,7 @@ function updateItemInTable(item) {
     <td>${item.rarity}</td>
     <td>${item.warehouse.warehouseName}</td>
     <td><button class="btn btn-primary" id=editButton" onclick="activateItemEditForm(${item.id})">Edit</button></td>
-    <td><button class="btn btn-primary" id=deleteButton" onclick="activateItemDeleteForm(${item.id})">Delete</button></td>
+    <td><button class="btn btn-danger" id=deleteButton" onclick="activateItemDeleteForm(${item.id})">Delete</button></td>
     `;
 }
 
@@ -488,7 +488,7 @@ function updateWarehouseInTable(warehouse) {
     <td>${warehouse.id}</td>
     <td>${warehouse.warehouseName}</td>
     <td><button class="btn btn-primary" id=editButton" onclick="activateWarehouseEditForm(${warehouse.id})">Edit</button></td>
-    <td><button class="btn btn-primary" id=deleteButton" onclick="activateWarehouseDeleteForm(${warehouse.id})">Delete</button></td>
+    <td><button class="btn btn-danger" id=deleteButton" onclick="activateWarehouseDeleteForm(${warehouse.id})">Delete</button></td>
     `;
 }
 
