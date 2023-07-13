@@ -9,6 +9,44 @@
 
 
     <script src="index.js" defer></script>  <!-- defer will wait to load your script until the html is ready to go (ie. finished parsing)-->
+    <style>
+        * {box-sizing: border-box}
+        
+        /* Set height of body and the document to 100% */
+        body, html {
+          height: 100%;
+          margin: 0;
+          font-family: Arial;
+        }
+        
+        /* Style tab links */
+        .tablink {
+          background-color: #555;
+          color: rgb(0, 0, 0);
+          float: left;
+          border: none;
+          outline: none;
+          cursor: pointer;
+          padding: 14px 16px;
+          font-size: 17px;
+          width: 25%;
+        }
+        
+        .tablink:hover {
+          background-color: #777;
+        }
+        
+        /* Style the tab content (and add height:100% for full page content) */
+        .tabcontent {
+          color: black;
+          display: none;
+          padding: 100px 20px;
+          height: 100%;
+        }
+        
+        #Items {background-color: rgb(221, 220, 220); height: 200%;}
+        #Warehouses {background-color: rgb(221, 220, 220); height: 200%;}
+        </style>
 
 </head>
 <body>
@@ -28,7 +66,7 @@
     <div id="Items" class="tabcontent">
         <div class="container-fluid">
 
-            <h1 class="h1">Items API</h1>
+            <h1 class="h1">Items</h1>
     
             <!-- row so my table and form are next to each other -->
             <div class="row">   
@@ -189,7 +227,7 @@
     <div id="Warehouses" class="tabcontent" style="display:none">
         <div class="container-fluid">
 
-            <h1 class="h1">Warehouses API</h1>
+            <h1 class="h1">Warehouses</h1>
     
             <!-- row so my table and form are next to each other -->
             <div class="row">   
