@@ -1,5 +1,5 @@
 /**
- * here is the javascript for index.html for the items API wand warehouses API
+ * here is the javascript for index.html for the items API and warehouses API
  */
 
 
