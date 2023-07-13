@@ -27,8 +27,8 @@ public class WarehouseService {
         Optional<Warehouse> warehouse = warehouseRepository.findById(id);
         
         // if our database has a warehouse with a matching id, return it
-        if(warehouse.isPresent()) {             // ispresent checks if the optional returned the warehouse
-            return warehouse.get();             // get will retrieve the warehouse
+        if(warehouse.isPresent()) {                 // ispresent checks if the optional returned the warehouse
+            return warehouse.get();                 // get will retrieve the warehouse
         }
 
         //otherwise return null

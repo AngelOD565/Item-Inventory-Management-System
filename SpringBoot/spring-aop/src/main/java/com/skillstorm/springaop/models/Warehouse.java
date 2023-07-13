@@ -13,18 +13,18 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity                                     
-@Table(name = "WAREHOUSES")                  // Warehouse class maps to WAREHOUSES table in database
+@Table(name = "WAREHOUSES")                                         // Warehouse class maps to WAREHOUSES table in database
 public class Warehouse {
     
     @Id                                     
     @Column                                 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)     // Serial ID column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)             // Serial ID column
     private int id;
 
     @Column(name = "warehouse_name")
     private String warehouseName;
 
-    // specifies this is the ONE sideof the relatonship
+    // specifies this is the ONE side of the relatonship
     @JsonBackReference      
     @OneToMany(targetEntity = Item.class, mappedBy = "warehouse")   // one-to-many side of warehouse-item relationship
     private Set<Item> items;

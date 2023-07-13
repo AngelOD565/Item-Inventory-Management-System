@@ -30,13 +30,13 @@ public class WarehouseController {
     WarehouseService warehouseService;
 
     @GetMapping
-    public ResponseEntity<List<Warehouse>> findAllWarehouses() {                                          //mapping retrieval of all warehouses for our warehouse table
+    public ResponseEntity<List<Warehouse>> findAllWarehouses() {                     //mapping retrieval of all warehouses for our warehouse table
         List<Warehouse> warehouses = warehouseService.findAllWarehouses();
 
         return new ResponseEntity<List<Warehouse>>(warehouses, HttpStatus.OK);
     }
 
-    @GetMapping("/warehouse/{id}")                                                                   //mapping retrieval of warehouse id's for our warehouse table
+    @GetMapping("/warehouse/{id}")                                                   //mapping retrieval of warehouse id's for our warehouse table
     public ResponseEntity<Warehouse> findWarehouseById(@PathVariable int id) {
         Warehouse warehouse = warehouseService.findWarehouseById(id);
         return new ResponseEntity<Warehouse>(warehouse, HttpStatus.OK);
@@ -56,7 +56,7 @@ public class WarehouseController {
     }
 
 
-    @PutMapping("/warehouse/updateName")                                                                             //mapping updates to our warehouse names for our warehouse table
+    @PutMapping("/warehouse/updateName")                                             //mapping updates to our warehouse names for our warehouse table
     public ResponseEntity<Integer> updateWarehouseName(@RequestBody Warehouse warehouse, @RequestParam String newName) {
         
         int updated = warehouseService.updateWarehouseName(warehouse, newName);

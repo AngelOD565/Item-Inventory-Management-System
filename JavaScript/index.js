@@ -14,7 +14,7 @@ let allWarehouses = [];
  * event listeners are how we respond to events in the html
  * 
  */
-document.addEventListener('DOMContentLoaded', () => {                                                       //Listener for items
+document.addEventListener('DOMContentLoaded', () => {                                         //Listener for items
   
     let xhr = new XMLHttpRequest();         // creating a new XHR object 
 
@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {                           
 
 });
 
-document.addEventListener('DOMContentLoaded', () => {                                              //Listener for warehouses
+document.addEventListener('DOMContentLoaded', () => {                                         //Listener for warehouses
 
     let xhr = new XMLHttpRequest();         
 

@@ -25,10 +25,10 @@ public class Item {
 
     @Column
     @Max(5)
-    @Min(1)                                 // item rarities only go from 1 (Common) to 5 (Legendary)
+    @Min(1)                                  // item rarities only go from 1 (Common) to 5 (Legendary)
     private int rarity;
 
-    @ManyToOne                              // this is the MANY side of the warehouse-item relationship
+    @ManyToOne                               // this is the MANY side of the warehouse-item relationship
     @JoinColumn(name = "warehouse_id")       // this is a foreign key to be joined on the warehouse id
     private Warehouse warehouse;
     

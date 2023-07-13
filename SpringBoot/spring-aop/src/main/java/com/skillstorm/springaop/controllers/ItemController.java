@@ -74,7 +74,7 @@ public class ItemController {
         return new ResponseEntity<Item>(newItem, HttpStatus.OK);
     }
 
-    @PutMapping("/item/updateName")                                                                             //mapping updates to our item names for our item table
+    @PutMapping("/item/updateName")                                             //mapping updates to our item names for our item table
     public ResponseEntity<Integer> updateItemName(@RequestBody Item item, @RequestParam String newName) {
         
         int updated = itemService.updateName(item, newName);
