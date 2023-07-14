@@ -54,9 +54,6 @@ public class ItemService {
 
     public Item saveItem(Item item) {
 
-        
-
-
         Warehouse warehouseWithId = warehouseService.saveWarehouse(item.getWarehouse());
         item.setWarehouse(warehouseWithId);
         return itemRepository.save(item);                
